@@ -137,8 +137,9 @@ func (c *graphicsContext) needsRestoring() (bool, error) {
 	return c.offscreen.shareableImage.IsInvalidated()
 }
 
-func (c *graphicsContext) restoreIfNeeded() error {
-	if !shareable.IsRestoringEnabled() {
+func (c *graphicsContext) Resume() error {
+	ui.GLContext().Resume()
+	if !c.imageTasksDone {
 		return nil
 	}
 	r, err := c.needsRestoring()
